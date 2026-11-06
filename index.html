@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T-Symphony Fix for TCL TVs</title>
+<meta name="description" content="Use your TCL TV speakers together with any eARC soundbar, in sync.">
+<style>
+  :root { --bg:#14171f; --card:#1c212c; --text:#e7eaf0; --muted:#9aa3b2; --accent:#40c4a0; --code:#0f1218; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:48px 16px 64px; }
+  h1 { font-size:2.2rem; margin:0 0 8px; }
+  h2 { font-size:1.25rem; margin:40px 0 12px; }
+  p, li { color:var(--text); }
+  .muted { color:var(--muted); font-size:.92rem; }
+  .card { background:var(--card); border-radius:14px; padding:24px; margin-top:24px; }
+  .btn { display:inline-block; background:var(--accent); color:#06231b; font-weight:700; text-decoration:none; padding:14px 26px; border-radius:10px; font-size:1.1rem; }
+  .btn:hover { filter:brightness(1.08); }
+  code { background:var(--code); padding:2px 6px; border-radius:5px; font-size:.9em; word-break:break-all; }
+  pre { background:var(--code); padding:14px 16px; border-radius:10px; overflow-x:auto; font-size:.9rem; }
+  pre code { background:none; padding:0; word-break:normal; }
+  ol li { margin-bottom:12px; }
+  .warn { border-left:3px solid var(--accent); padding-left:14px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>T-Symphony Fix</h1>
+  <p>Play sound from your TCL TV speakers <b>and</b> any eARC soundbar at the same time, and line them up with an adjustable speaker delay.</p>
+
+  <div class="card">
+    <a class="btn" href="/tsymfix.apk" download>Download APK</a>
+    <p class="muted">v1.0 &middot; 17&nbsp;KB &middot; Android TV 7+ &middot; short link: <code>tcl.vadymloves.beer/tsymfix.apk</code><br>
+    SHA-256: <code>3f2232f5fcd2a2a1fe939d4bbf8c9222a5071806e10192d8a33cd10b6fcec121</code></p>
+  </div>
+
+  <p class="muted warn">Unofficial, not affiliated with TCL. Tested on one TCL Smart TV Pro (Android TV 12, MediaTek) with a TCL Q75H soundbar. Other models or firmware may not have this feature. Use at your own risk.</p>
+
+  <h2>What it does</h2>
+  <ul>
+    <li>Turns on the TV's built-in T-Symphony mode (TV speakers + soundbar together) for any eARC soundbar, not only TCL-certified ones.</li>
+    <li>Delays the TV speakers so they stay in sync with the soundbar. Default 50&nbsp;ms, adjustable with the remote.</li>
+    <li>Turns it back on when the TV resets it (soundbar reconnect, screen off/on).</li>
+  </ul>
+
+  <h2>Install (one time, needs a computer with adb)</h2>
+  <ol>
+    <li>On the TV: <b>Settings &rarr; System (or Device Preferences) &rarr; About</b>, press <b>Build</b> 7 times. Then open <b>Developer options</b> and enable <b>USB debugging</b> / network debugging. Note the TV's IP address.</li>
+    <li>On the computer, connect and allow the prompt on the TV:
+      <pre><code>adb connect TV_IP:5555</code></pre></li>
+    <li>Install the app:
+      <pre><code>adb install tsymfix.apk</code></pre></li>
+    <li>Allow it to switch T-Symphony on (required):
+      <pre><code>adb shell pm grant local.tsymfix android.permission.WRITE_SECURE_SETTINGS</code></pre></li>
+    <li>Open <b>T-Symphony Fix</b> from the TV's app list.</li>
+  </ol>
+
+  <h2>Use</h2>
+  <ul>
+    <li><b>&minus;10 / &minus;5 / +5 / +10 ms</b>: if the TV speakers sound ahead of the soundbar, increase the delay; if they lag, decrease it.</li>
+    <li><b>Service: on / off</b>: off returns the TV to stock behaviour (soundbar only, no delay).</li>
+    <li><b>Language</b>: English, Ukrainian, Russian.</li>
+  </ul>
+
+  <h2>Notes</h2>
+  <ul>
+    <li>After a full reboot, if the TV speakers stay silent, open the app once. Some TVs block apps from starting on boot.</li>
+    <li>To uninstall, set <b>Service: off</b> first, then <code>adb uninstall local.tsymfix</code>.</li>
+  </ul>
+</main>
+</body>
+</html>
